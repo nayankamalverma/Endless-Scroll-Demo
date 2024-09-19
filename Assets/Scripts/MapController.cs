@@ -39,7 +39,7 @@ public class MapController : MonoBehaviour
     private void Update()
     {
        // RectTransform ele5 = mapList[5];
-        RectTransform ele1 = mapList[0];
+        RectTransform ele1 = mapList[1];
 
         if(mapCnt>=6){
             if (ele1.position.y > topPoint.position.y)
@@ -83,18 +83,18 @@ public class MapController : MonoBehaviour
         GameObject map = Instantiate(imagePrefab[mapCnt % 2], content);
         RectTransform mapRect = map.GetComponent<RectTransform>();
 
-        //if (mapList.Count > 0)
-        //{
-        //    RectTransform firstTile = mapList[0];
-        //    mapRect.anchoredPosition = new Vector2(firstTile.anchoredPosition.x, firstTile.anchoredPosition.y + imageHeight);
-        //}
-        //else
-        //{
-        //    mapRect.anchoredPosition = new Vector2(0, 0);
-        //}
+        if (mapList.Count > 0)
+        {
+            RectTransform firstTile = mapList[0];
+            mapRect.anchoredPosition = new Vector2(firstTile.anchoredPosition.x, firstTile.anchoredPosition.y + imageHeight);
+        }
+        else
+        {
+            mapRect.anchoredPosition = new Vector2(0, 0);
+        }
 
-        //mapList.Insert(0, mapRect);
-        //mapRect.SetAsFirstSibling();
+        mapList.Insert(0, mapRect);
+        mapRect.SetAsFirstSibling();
     }
 
 }
