@@ -40,26 +40,6 @@ public class MapController : MonoBehaviour
     private void Update()
     {
         CheckTile();
-       // RectTransform ele5 = mapList[5];
-       //RectTransform ele1 = mapList[0];
-
-            //if(mapCnt>=6){
-            //if (ele1.position.y > topPoint.position.y)
-            //{
-            //    Destroy(ele1.gameObject);
-            //    mapList.Remove(ele1);
-            //    SetupTile();
-            //    mapCnt++;
-            //}
-        //    else if (ele5.position.y < bottomPoint.position.y)
-        //{
-        //    Destroy(ele5.gameObject);
-        //    mapList.Remove(ele5);
-        //    AddTileAtTop();
-        //    mapCnt--;
-        //}
-        //}
-
     }
 
     private void CheckTile()
@@ -74,6 +54,7 @@ public class MapController : MonoBehaviour
             RectTransform mapRect = SetupTile();
             mapRect.localPosition = new Vector2(0, lastY-imageHeight);
             mapCnt++;
+            content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y+imageHeight);
         }
         else if (ele5.position.y < bottomPoint.position.y)
         {
