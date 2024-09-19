@@ -10,7 +10,7 @@ public class MapController : MonoBehaviour
     [SerializeField] private RectTransform topPoint;
     [SerializeField] private RectTransform bottomPoint;
 
-    private List<RectTransform> mapList;
+    [SerializeField]private List<RectTransform> mapList;
     [SerializeField] private int mapCnt = 0;
     private float imageHeight = 1920;
     private int initTiles = 6;
@@ -21,11 +21,12 @@ public class MapController : MonoBehaviour
         for (int i = 0; i < initTiles; i++)
         {
             mapCnt++;
-            AddTile();
+            RectTransform mapRect = SetupTile();
+            mapRect.localPosition= new Vector2 (0, -imageHeight*i);
         }
 
-        //content.sizeDelta = new Vector2(content.sizeDelta.x, 5 * imageHeight);
-        positionViewport();
+        content.sizeDelta = new Vector2(content.sizeDelta.x, initTiles * imageHeight);
+       // positionViewport();
     }
 
     private void positionViewport()
@@ -38,29 +39,54 @@ public class MapController : MonoBehaviour
 
     private void Update()
     {
+        CheckTile();
        // RectTransform ele5 = mapList[5];
-        RectTransform ele1 = mapList[0];
+       //RectTransform ele1 = mapList[0];
 
-        if(mapCnt>=6){
-            if (ele1.position.y > topPoint.position.y)
-            {
-                Destroy(ele1.gameObject);
-                mapList.Remove(ele1);
-                AddTile();
-                mapCnt++;
-            }
-            //else if (ele5.position.y < bottomPoint.position.y)
+            //if(mapCnt>=6){
+            //if (ele1.position.y > topPoint.position.y)
             //{
-            //    Destroy(ele5.gameObject);
-            //    mapList.Remove(ele5);
-            //    AddTileAtTop();
-            //    mapCnt--;
+            //    Destroy(ele1.gameObject);
+            //    mapList.Remove(ele1);
+            //    SetupTile();
+            //    mapCnt++;
             //}
-        }
+        //    else if (ele5.position.y < bottomPoint.position.y)
+        //{
+        //    Destroy(ele5.gameObject);
+        //    mapList.Remove(ele5);
+        //    AddTileAtTop();
+        //    mapCnt--;
+        //}
+        //}
 
     }
 
-    void AddTile()
+    private void CheckTile()
+    {
+        RectTransform ele1 = mapList[0];
+        RectTransform ele5 = mapList[5];
+        if (ele1.position.y > topPoint.position.y)
+        {
+            float lastY = mapList[^1].localPosition.y;
+            mapList.Remove(ele1);
+            Destroy(ele1.gameObject);
+            RectTransform mapRect = SetupTile();
+            mapRect.localPosition = new Vector2(0, lastY-imageHeight);
+            mapCnt++;
+        }
+        else if (ele5.position.y < bottomPoint.position.y)
+        {
+            Destroy(ele5.gameObject);
+            mapList.Remove(ele5);
+            AddTileAtTop();
+            mapCnt--;
+        }
+    }
+
+
+
+    RectTransform SetupTile()
     {
         GameObject map = Instantiate(imagePrefab[mapCnt % 2], content);
         RectTransform mapRect = map.GetComponent<RectTransform>();
@@ -76,6 +102,7 @@ public class MapController : MonoBehaviour
         //}
 
         mapList.Add(mapRect);
+        return mapRect;
     }
 
     void AddTileAtTop()
