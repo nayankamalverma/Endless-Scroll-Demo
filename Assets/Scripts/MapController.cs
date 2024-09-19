@@ -39,7 +39,7 @@ public class MapController : MonoBehaviour
     private void Update()
     {
        // RectTransform ele5 = mapList[5];
-        RectTransform ele1 = mapList[1];
+        RectTransform ele1 = mapList[0];
 
         if(mapCnt>=6){
             if (ele1.position.y > topPoint.position.y)
