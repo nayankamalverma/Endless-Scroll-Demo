@@ -19,15 +19,18 @@ public class MapController : MonoBehaviour
     void Start()
     {
         imagePool = new Queue<GameObject>();
-        poolSize = levelCount/levelPerTile;
+        poolSize = levelCount / levelPerTile;
+        poolSize += (levelCount % levelPerTile) > 0 ? 1 : 0;
 
         for (int i = 0; i < poolSize; i++)
         {
             GameObject img = Instantiate(imagePrefab[i % 2], content);
             for(int j = 0; j < levelPerTile; j++)
             {
-                Button leveBtn = Instantiate(levelBtnPerfab, img.GetComponent<RectTransform>());
-                leveBtn.GetComponentInChildren<TextMeshProUGUI>().text = (lvl++).ToString();
+                if(lvl<=levelCount){
+                    Button leveBtn = Instantiate(levelBtnPerfab, img.GetComponent<RectTransform>());
+                    leveBtn.GetComponentInChildren<TextMeshProUGUI>().text = (lvl++).ToString();
+                }
             }
             img.SetActive(false);
             imagePool.Enqueue(img);
