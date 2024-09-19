@@ -1,22 +1,34 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Splines;
+using UnityEngine.UI;
+using TMPro;
 public class MapController : MonoBehaviour
 {
-    public List<GameObject> imagePrefab; // Prefab for the images
-    public RectTransform content; // Content object of the Scroll View
-    public int poolSize = 20; // Number of images to keep in the pool
+    [SerializeField] private List<GameObject> imagePrefab; // Prefab for the images
+    [SerializeField] private RectTransform content; // Content object of the Scroll View
+    [SerializeField] private Button levelBtnPerfab;
+
+    [SerializeField] private int  levelCount = 33;
+    [SerializeField] private int levelPerTile = 4; // number of level per map tiles
+    private int poolSize; // Number of map tile to keep in the pool
+    int lvl = 1;
     private Queue<GameObject> imagePool;
     private float imageHeight = 1920;
-    Spline beziers;
 
     void Start()
     {
         imagePool = new Queue<GameObject>();
+        poolSize = levelCount/levelPerTile;
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject img = Instantiate(imagePrefab[i%2], content);
+            GameObject img = Instantiate(imagePrefab[i % 2], content);
+            for(int j = 0; j < levelPerTile; j++)
+            {
+                Button leveBtn = Instantiate(levelBtnPerfab, img.GetComponent<RectTransform>());
+                leveBtn.GetComponentInChildren<TextMeshProUGUI>().text = (lvl++).ToString();
+            }
             img.SetActive(false);
             imagePool.Enqueue(img);
         }
@@ -25,10 +37,14 @@ public class MapController : MonoBehaviour
         {
             AddImage();
         }
+        PositionViewPort();
+    }
+
+    private void PositionViewPort()
+    {
         float contentHeight = poolSize * imageHeight;
-        Debug.Log(contentHeight);
         Vector2 newPosition = content.anchoredPosition;
-        newPosition.y = contentHeight/2;
+        newPosition.y = -contentHeight/2;
         content.anchoredPosition = newPosition;
     }
 

@@ -216,7 +216,9 @@ MonoBehaviour:
   - {fileID: 1429825990068352, guid: 228a22766b61ffc4e893ab639a5af9ce, type: 3}
   - {fileID: 8352421177788309267, guid: 6e2585b877f7af54ebd1485fc1b0e281, type: 3}
   content: {fileID: 455189273}
-  poolSize: 20
+  levelBtnPerfab: {fileID: 1148381948100074730, guid: 6cfff0a29d8dda6479864c16b477b187, type: 3}
+  levelCount: 50
+  levelPerTile: 5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +538,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
